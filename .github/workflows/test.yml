@@ -15,12 +15,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Parse NGINX version
-        id: parse_version
-        uses: michielkempen/regex-matcher@v1.1
+      - name: Parse tag
+        id: parse_tag
+        uses: michielkempen/regex-matcher@v1.2
         with:
-          regex_pattern: '^refs/tags/nginx-(.*)-.*$'
+          regex_pattern: '^refs/tags/([a-z-]+)-([0-9.]+)-([0-9.]+)$'
           search_string: ${{ github.ref }}
 
+      - name: Print image
+        run: echo ${{ steps.parse_tag.outputs.match_0 }}
+
       - name: Print version
-        run: echo ${{ steps.parse_version.outputs.match }}
+        run: echo ${{ steps.parse_tag.outputs.match_1 }}
+
+      - name: Print tag
+        run: echo ${{ steps.parse_tag.outputs.match_2 }}
