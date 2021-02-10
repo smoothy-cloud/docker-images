@@ -1,14 +1,14 @@
-name: Publish NGINX images
+name: Publish Docker image
 
 on:
   push:
     tags:
-      - nginx-*-*
+      - '*'
 
 jobs:
 
-  push_to_registry:
-    name: Publish NGINX 1.19 image
+  publish:
+    name: Publish Docker image
     runs-on: ubuntu-latest
     steps:
 
@@ -22,11 +22,14 @@ jobs:
           regex_pattern: '^refs/tags/([a-z-]+)-([0-9.]+)-([0-9.]+)$'
           search_string: ${{ github.ref }}
 
-      - name: Print image
-        run: echo ${{ steps.parse_tag.outputs.match_0 }}
-
-      - name: Print version
-        run: echo ${{ steps.parse_tag.outputs.match_1 }}
-
-      - name: Print tag
-        run: echo ${{ steps.parse_tag.outputs.match_2 }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v1
+        with:
+          context: ${{ steps.parse_tag.outputs.match_0 }}/${{ steps.parse_tag.outputs.match_1 }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          repository: smoothy-cloud/${{ steps.parse_tag.outputs.match_0 }}
+          push: true
+          tags: |
+            smoothy-cloud/${{ steps.parse_tag.outputs.match_0 }}:${{ steps.parse_tag.outputs.match_1 }}-${{ steps.parse_version.outputs.version }}
+            smoothy-cloud/${{ steps.parse_tag.outputs.match_0 }}:${{ steps.parse_tag.outputs.match_1 }}
