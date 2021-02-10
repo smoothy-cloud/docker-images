@@ -20,7 +20,7 @@ jobs:
         uses: michielkempen/regex-matcher@v1
         with:
           regex_pattern: '^refs/tags/nginx-(.*)-.*$'
-          search_string: ${{ GITHUB_REF }}
+          search_string: ${{ github.ref }}
 
       - name: Print version
         run: echo ${{ steps.parse_version.outputs.matches[1] }}
