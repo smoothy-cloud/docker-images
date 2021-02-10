@@ -17,11 +17,10 @@ jobs:
 
       - name: Parse NGINX version
         id: parse_version
-        uses: AsasInnab/regex-action@v1
+        uses: michielkempen/regex-matcher@v1
         with:
           regex_pattern: '^refs/tags/nginx-(.*)-.*$'
-          regex_flags: 'g'
           search_string: $GITHUB_REF
 
       - name: Print version
-        run: echo ${{ steps.parse_version.outputs.first_match }}
+        run: echo ${{ steps.parse_version.outputs.matches[1] }}
