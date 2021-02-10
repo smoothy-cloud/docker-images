@@ -31,5 +31,5 @@ jobs:
           repository: smoothy-cloud/${{ steps.parse_tag.outputs.match_0 }}
           push: true
           tags: |
-            smoothy-cloud/${{ steps.parse_tag.outputs.match_0 }}:${{ steps.parse_tag.outputs.match_1 }}-${{ steps.parse_version.outputs.version }}
-            smoothy-cloud/${{ steps.parse_tag.outputs.match_0 }}:${{ steps.parse_tag.outputs.match_1 }}
+            ${{ steps.parse_tag.outputs.match_1 }}-${{ steps.parse_tag.outputs.match_2 }}
+            ${{ steps.parse_tag.outputs.match_1 }}
