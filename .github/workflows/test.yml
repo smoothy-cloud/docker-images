@@ -1,0 +1,30 @@
+name: Publish NGINX images
+
+on:
+  push:
+    tags:
+      - nginx-*-*
+
+jobs:
+
+  push_to_registry:
+    name: Publish NGINX 1.19 image
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Print tag
+        run: echo $GITHUB_REF
+
+      - name: Parse NGINX version
+        id: parse_version
+        uses: AsasInnab/regex-action@v1
+        with:
+          regex_pattern: '^refs/tags/nginx-(.*)-.*$'
+          regex_flags: ''
+          search_string: $GITHUB_REF
+
+      - name: Print version
+        run: echo ${{ steps.parse_version.outputs.first_match }}
