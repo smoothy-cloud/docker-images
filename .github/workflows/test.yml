@@ -15,15 +15,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Print tag
-        run: echo $GITHUB_REF
-
       - name: Parse NGINX version
         id: parse_version
         uses: AsasInnab/regex-action@v1
         with:
           regex_pattern: '^refs/tags/nginx-(.*)-.*$'
-          regex_flags: ''
+          regex_flags: 'g'
           search_string: $GITHUB_REF
 
       - name: Print version
