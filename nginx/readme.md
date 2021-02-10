@@ -3,7 +3,7 @@
 ## Usage
 
 ```
-docker run --tty smoothy/nginx-1.19
+docker run --tty smoothy/nginx:1.19
 ```
 
 ## User
