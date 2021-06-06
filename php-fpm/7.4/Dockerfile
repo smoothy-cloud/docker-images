@@ -29,6 +29,7 @@ RUN install-php-extensions \
     redis \
     shmop \
     soap \
+    sockets \
     zip
 
 # copy php configuration
