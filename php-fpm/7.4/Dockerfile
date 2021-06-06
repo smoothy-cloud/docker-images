@@ -60,6 +60,6 @@ RUN chown --recursive :smoothy /var/www/html \
  && chmod g+s /var/www/html \
  && chmod --recursive 775 /var/www/html
 
-ENTRYPOINT ["bash", "/run.sh"]
+ENTRYPOINT ["sh", "/run.sh"]
 
 CMD ["/usr/local/sbin/php-fpm", "-c", "/usr/local/etc/php-fpm.d/www.conf"]
